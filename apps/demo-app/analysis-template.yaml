@@ -18,7 +18,8 @@ spec:
                 command: ["/bin/sh", "-c"]
                 args:
                 - |
-                  code=$(curl -s -o /dev/null -w "%{http_code}" http://demo-app-canary.demo.svc.cluster.local/color)
-                  echo "HTTP code: $code"
-                  test "$code" = "200"
+                  color=$(curl -s http://demo-app-canary.demo.svc.cluster.local/color)
+                  echo "Couleur detectee: $color"
+                  echo "$color" | grep -qi "red" && exit 1
+                  exit 0
               restartPolicy: Never
