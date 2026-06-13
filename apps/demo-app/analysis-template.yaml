@@ -3,8 +3,6 @@ kind: AnalysisTemplate
 metadata:
   name: success-rate
 spec:
-  args:
-  - name: service-name
   metrics:
   - name: canary-health
     failureLimit: 0
