@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: demo-app
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: demo-app
@@ -19,6 +23,13 @@ spec:
         - containerPort: 8080
   strategy:
     canary:
+      analysis:
+        templates:
+        - templateName: success-rate
+        startingStep: 1
+        args:
+        - name: service-name
+          value: demo-app
       steps:
       - setWeight: 20
       - pause: {}
